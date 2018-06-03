@@ -5,17 +5,16 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
-      redirect_to root_url
+      render json: { message: "Micropost created!"}
     else
       @feed_items = []
-      render 'static_pages/home'
+      render json: { message: "Failed to create micropost, try again later"}, status: :unprocessable_entity
     end
   end
 
   def destroy
     @micropost.destroy
-    redirect_to root_url
+    render json: { message: "Micropost destroyed!"}
   end
 
   private
@@ -25,6 +24,6 @@ class MicropostsController < ApplicationController
 
     def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to root_url if @micropost.nil?
+      render json: { message: "Forbidden!"}, status: :forbidden if @micropost.nil?
     end
 end

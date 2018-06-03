@@ -1,6 +1,5 @@
 SampleApp::Application.routes.draw do
-  # mount Twitter::API => '/'
-  resources :users do
+  resources :users, only: [:index, :show, :create, :update, :destroy] do
     member do
       get :following, :followers
     end

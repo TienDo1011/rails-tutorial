@@ -7,14 +7,12 @@ gem 'sprockets'
 gem 'rake'
 gem 'bcrypt'
 gem 'faker'
-gem 'will_paginate'
-gem 'bootstrap-will_paginate'
-gem 'pry'
 
 group :development, :test do
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'rspec'
+    gem 'pry'
     gem 'byebug'
 end
 

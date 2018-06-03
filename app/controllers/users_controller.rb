@@ -4,59 +4,51 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.limit(User::USERS_PER_PAGE).offset(offset)
+    render json: { users: @users }
   end
   
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
-  end
-
-  def new
-    @user = User.new
+    @microposts = @user.microposts.limit(Micropost::MICROPOSTS_PER_PAGE).offset(offset)
+    render json: { user: @user, microposts: @microposts }
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      render json: { message: "Welcome to the Sample App!" }
     else
-      render 'new'
+      render json: { message: "Error creating user, try again" }, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
+      render json: { message: "Profile updated" }
     else
-      render 'edit'
+      render json: { message: "Error creating user, try again" }, status: :unprocessable_entity
     end
   end
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted."
-    redirect_to users_url
+    render json: { message: "User deleted." }
   end
 
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
-    render 'show_follow'
+    @users = @user.followed_users.limit(User::USERS_PER_PAGE).offset(offset)
+    render json: { title: @title, current_user: @user, followings: @users }
   end
 
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    @users = @user.followers.limit(User::USERS_PER_PAGE).offset(offset)
+    render json: { title: @title, current_user: @user, followers: @users }
   end
 
   private
@@ -72,5 +64,9 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    def offset
+      User::USERS_PER_PAGE * params[:page] if params[:page] else 0
     end
 end
