@@ -2,7 +2,6 @@ class RelationshipsController < ApplicationController
   before_action :signed_in_user
 
   def create
-    puts "relationships created!"
     @user = User.find(params[:relationship][:followed_id])
     current_user.follow!(@user)
     render json: {message: "You have followed #{@user.name}!"}

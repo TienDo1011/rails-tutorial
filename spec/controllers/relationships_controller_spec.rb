@@ -6,9 +6,7 @@ describe RelationshipsController do
   let(:other_user) { FactoryBot.create(:user) }
 
   describe "User are authorized" do
-    let!(:token) { sign_in user, no_capybara: true }
-    
-    before { request.headers["Authorization"] = "Bearer #{token}" }
+    before { sign_in user, no_capybara: true }
 
     describe "creating a relationship with Ajax" do
       it "should increment the Relationship count" do
