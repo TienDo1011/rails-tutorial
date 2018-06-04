@@ -13,13 +13,14 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
+    @micropost = current_user.microposts.find(params[:id])
     @micropost.destroy
     render json: { message: "Micropost destroyed!"}
   end
 
   private
     def micropost_params
-      params.require(:micropost).permit()
+      params.require(:micropost).permit(:content)
     end
 
     def correct_user
