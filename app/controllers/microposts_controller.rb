@@ -8,7 +8,7 @@ class MicropostsController < ApplicationController
       render json: { message: "Micropost created!"}
     else
       @feed_items = []
-      render json: { message: "Failed to create micropost, try again later"}, status: :unprocessable_entity
+      render json: { message: get_error(@micropost) }, status: :unprocessable_entity
     end
   end
 
