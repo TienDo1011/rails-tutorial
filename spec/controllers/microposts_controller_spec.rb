@@ -5,11 +5,11 @@ describe MicropostsController do
   let(:other_user) { FactoryBot.create(:user) }
   let!(:micropost) { FactoryBot.create(:micropost, user: user) }
 
-  describe "User are authorized" do
-    before { sign_in user, no_capybara: true }
+  describe "POST /microposts" do
+    context "authorized" do
+      before { sign_in user, no_capybara: true }
 
-    describe "creating a micropost" do
-      it "should increment the micropost" do
+      it "creates micropost" do
         totalMicropost = Micropost.count
         userMicropostsCount = user.microposts.count
         xhr :post, :create, micropost: { content: "Something" }
@@ -19,9 +19,12 @@ describe MicropostsController do
         expect(response.status).to eq(200)
       end
     end
+  end
 
-    describe "destroying a micropost" do
-      it "should decrement the micropost" do
+  describe "DELETE /microposts/:id" do
+    context "authorized" do
+      before { sign_in user, no_capybara: true }
+      it "destroys micropost" do
         totalMicropost = Micropost.count
         userMicropostsCount = user.microposts.count
         xhr :delete, :destroy, id: micropost.id
@@ -31,11 +34,9 @@ describe MicropostsController do
         expect(response.status).to eq(200)
       end
     end
-  end
 
-  describe "User are not authorized" do
-    describe "user are not signed in" do
-      it "should not let user delete the micropost" do
+    context "not sign in" do
+      it "do not destroy micropost" do
         expect do
           xhr :delete, :destroy, id: micropost.id
         end.not_to change(user.microposts, :count)
@@ -43,9 +44,9 @@ describe MicropostsController do
       end
     end
 
-    describe "different user" do
+    context "different user" do
       before { sign_in other_user, no_capybara: true }
-      it "should not let user delete the micropost" do
+      it "do not destroy micropost" do
         expect {
           xhr :delete, :destroy, id: micropost.id
         }.not_to change(user.microposts, :count)
