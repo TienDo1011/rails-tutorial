@@ -92,7 +92,7 @@ describe "User pages" do
 
       describe "unfollowing a user" do
         before do
-          user.follow!(other_user)
+          user.follow!(other_user.id)
           visit user_path(other_user)
         end
 
@@ -197,7 +197,7 @@ describe "User pages" do
   describe "following/followers" do
     let(:user) { FactoryBot.create(:user) }
     let(:other_user) { FactoryBot.create(:user) }
-    before { user.follow!(other_user) }
+    before { user.follow!(other_user.id) }
 
     describe "followed users" do
       before do

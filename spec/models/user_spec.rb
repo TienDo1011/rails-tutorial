@@ -109,7 +109,7 @@ describe User do
 
   describe "remember token" do
     before {@user.save}
-    it "its" do
+    it "creates remember_token" do
       expect(subject.remember_token).not_to be_blank
     end
   end
@@ -136,18 +136,18 @@ describe User do
       end
     end
 
-    describe "status" do
+    describe "feed" do
       let(:unfollowed_micropost) do
         FactoryBot.create(:micropost, user: FactoryBot.create(:user))
       end
       let(:followed_user) { FactoryBot.create(:user) }
 
       before do
-        @user.follow!(followed_user)
+        @user.follow!(followed_user.id)
         3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
       end
 
-      it "its" do
+      it "shows microposts" do
         expect(subject.feed).to include(newer_micropost)
         expect(subject.feed).to include(older_micropost)
         expect(subject.feed).not_to include(unfollowed_micropost)
@@ -162,25 +162,25 @@ describe User do
     let(:other_user) { FactoryBot.create(:user) }
     before do
       @user.save
-      @user.follow!(other_user)
+      @user.follow!(other_user.id)
     end
 
     it { should be_following(other_user) }
-    it "its" do
+    it "adds followed user to its followed_users" do
       expect(subject.followed_users).to include(other_user)
     end
     describe "and unfollowing" do
-      before { @user.unfollow!(other_user) }
+      before { @user.unfollow!(other_user.id) }
 
       it { should_not be_following(other_user) }
-      it "its" do
+      it "removes followed user from its followed_users " do
         expect(subject.followed_users).not_to include(other_user)
       end
     end
 
     describe "followed user" do
       subject { other_user }
-      it "its" do
+      it "add follower to its followers list" do
         expect(subject.followers).to include(@user)
       end
     end

@@ -31,7 +31,7 @@ describe "Static pages" do
       describe "follower/following counts" do
         let(:other_user) { FactoryBot.create(:user) }
         before do
-          other_user.follow!(user)
+          other_user.follow!(user.id)
           visit root_path
         end
         
