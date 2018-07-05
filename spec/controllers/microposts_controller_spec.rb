@@ -12,7 +12,7 @@ describe MicropostsController do
       it "creates micropost" do
         totalMicropost = Micropost.count
         userMicropostsCount = user.microposts.count
-        xhr :post, :create, micropost: { content: "Something" }
+        post "/api/microposts", micropost: { content: "Something" }
 
         expect(Micropost.count).to eq(totalMicropost + 1)
         expect(user.microposts.count).to eq(userMicropostsCount + 1)

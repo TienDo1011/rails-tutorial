@@ -7,6 +7,7 @@ gem 'sprockets'
 gem 'rake'
 gem 'bcrypt'
 gem 'faker'
+gem 'grape'
 
 group :development, :test do
     gem 'sqlite3'
