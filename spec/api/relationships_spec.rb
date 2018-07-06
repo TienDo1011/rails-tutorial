@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-describe RelationshipsController do
+describe API::Relationships do
+  include Rack::Test::Methods
 
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
@@ -11,16 +12,16 @@ describe RelationshipsController do
 
       it "creates relationship" do
         current_count = Relationship.count
-        xhr :post, :create, relationship: { followed_id: other_user.id }
+        post "/api/relationships", relationship: { followed_id: other_user.id }
         expect(Relationship.count). to eq(current_count + 1)
-        expect(response).to be_success
+        expect(last_response.status).to eq(201)
       end
     end
 
     context "not authorized" do
       it "should not create relationship" do
-        xhr :post, :create, relationship: { followed_id: other_user.id }
-        expect(response.status).to eq(401)
+        post "/api/relationships", relationship: { followed_id: other_user.id }
+        expect(last_response.status).to eq(401)
       end
     end
   end
@@ -37,9 +38,9 @@ describe RelationshipsController do
 
       it "destroys relationship" do
         current_count = Relationship.count
-        xhr :delete, :destroy, id: relationship.id
+        delete "/api/relationships/#{relationship.id}"
         expect(Relationship.count).to eq(current_count - 1)
-        expect(response).to be_success
+        expect(last_response.status).to eq(200)
       end
     end
 
@@ -49,8 +50,8 @@ describe RelationshipsController do
         user.relationships.find_by(followed_id: other_user.id)
       end
       it "should not destroy relationship" do
-        xhr :delete, :destroy, id: relationship.id
-        expect(response.status).to eq(401)
+        delete "/api/relationships/#{relationship.id}"
+        expect(last_response.status).to eq(401)
       end
     end
   end

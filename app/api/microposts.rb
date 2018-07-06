@@ -1,29 +1,28 @@
-module Twitter
-  class Micropost < Grape::API
-    helpers do
-      def current_user
-        token = request.headers["Authorization"].split(" ")[1] if request.headers["Authorization"];
-        remember_token = User.digest(token)
-        @current_user ||= User.find_by(remember_token: remember_token)
-      end
-
-      def authenticate!
-        error!('401 Unauthorized', 401) unless current_user
+class Microposts < Grape::API
+  helpers AuthHelpers
+  
+  resource :microposts do
+    desc "Create a micropost"
+    params do
+      requires :micropost, type: Hash do
+        requires :content, type: String
       end
     end
+    post '/' do
+      authenticate!
+      Micropost.create!({
+        user: current_user,
+        content: params[:micropost][:content]
+      })
+    end
 
-    resource :microposts do
-      desc "creates micropost"
-      params do
-        requires :micropost, type: Hash do
-          requires :content, type: String
-        end
-      end
-      post '/' do
-        authenticate!
-        @micropost = current_user.microposts.build(params[:micropost])
-        @micropost.save
-      end
+    desc "Delete a micropost"
+    params do
+      requires :id, type: String
+    end
+    delete ":id" do
+      authenticate!
+      current_user.microposts.find(params[:id]).destroy
     end
   end
 end
