@@ -10,6 +10,7 @@ gem 'faker'
 gem 'grape'
 gem 'webpacker', '~> 3.5'
 gem 'foreman'
+gem 'puma'
 
 group :development, :test do
     gem 'sqlite3'
