@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe API::Microposts do
+describe Microposts do
   include Rack::Test::Methods
   
   let(:user) { FactoryBot.create(:user) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe API::Relationships do
+describe Relationships do
   include Rack::Test::Methods
 
   let(:user) { FactoryBot.create(:user) }

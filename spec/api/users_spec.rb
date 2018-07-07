@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe API::Users do
+describe Users do
   include Rack::Test::Methods
 
   describe "POST /users" do
@@ -39,9 +39,10 @@ describe API::Users do
 
     context "not authorized" do
       it "do not update user" do
-        patch "/api/users/#{admin_user.id}", user: { name: 'Tien do' }
+        admin_attributes[:name] = 'Tien do'
+        patch "/api/users/#{admin_user.id}", user: admin_attributes
         expect(admin_user.reload.name).to eq('Tien')
-        expect(last_response.status).to eq(403)
+        expect(last_response.status).to eq(401)
       end
     end
   end
