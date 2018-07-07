@@ -8,6 +8,8 @@ gem 'rake'
 gem 'bcrypt'
 gem 'faker'
 gem 'grape'
+gem 'webpacker', '~> 3.5'
+gem 'foreman'
 
 group :development, :test do
     gem 'sqlite3'
