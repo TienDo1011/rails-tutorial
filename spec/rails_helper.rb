@@ -1,12 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'support/utilities'
+require 'support/database_cleaner'
 require 'byebug'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'capybara/rails'
+require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -29,13 +32,14 @@ require 'rspec/rails'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include RSpec::Rails::FeatureExampleGroup, type: :feature, file_path: /spec\/api/
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -57,6 +61,23 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+
   config.include Capybara::DSL
   config.include FactoryBot::Syntax::Methods
 end
+
+Capybara.register_driver :chrome do |app|
+  require 'selenium/webdriver'
+  Selenium::WebDriver::Chrome.driver_path = "/usr/local/bin/chromedriver"
+  Capybara::Selenium::Driver.new(
+   app,
+   :browser => :chrome,
+   desired_capabilities: {
+      "chromeOptions" => {
+       "args" => %w{ window-size=1920,1080 no-sandbox user-data-dir=/root }
+     }
+    }
+  )
+end
+
+Capybara.default_driver = :chrome

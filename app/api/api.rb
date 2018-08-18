@@ -3,7 +3,8 @@ class API < Grape::API
 
   prefix 'api'
   format :json
-
+  formatter :json, Grape::Formatter::ActiveModelSerializers
+  
   rescue_from ActiveRecord::RecordNotFound do |e|
     error! '404 Not found', 404
   end

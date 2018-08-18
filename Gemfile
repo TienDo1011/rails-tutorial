@@ -9,35 +9,32 @@ gem 'bcrypt'
 gem 'faker'
 gem 'grape'
 gem 'webpacker', '~> 3.5'
-gem 'foreman'
 gem 'puma'
+gem 'pg', '~> 0.18'
+gem 'active_model_serializers'
+gem 'grape-active_model_serializers'
 
 group :development, :test do
-    gem 'sqlite3'
     gem 'rspec-rails'
     gem 'rspec'
-    gem 'pry'
+    gem 'factory_bot_rails'
     gem 'byebug'
 end
 
 group :test do
     gem 'selenium-webdriver'
     gem 'capybara'
-    gem 'factory_bot_rails'
+    gem 'cucumber-rails', :require => false
+    gem 'database_cleaner'
 end
 
 gem 'sass-rails'
 gem 'uglifier'
-gem 'coffee-rails'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder'
 
 group :doc do
     gem 'sdoc', require: false
 end
 
 group :production do
-    gem 'pg'
     gem 'rails_12factor'
 end

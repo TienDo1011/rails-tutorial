@@ -4,15 +4,13 @@ class Microposts < Grape::API
   resource :microposts do
     desc "Create a micropost"
     params do
-      requires :micropost, type: Hash do
-        requires :content, type: String
-      end
+      requires :content, type: String
     end
-    post '/' do
+    post '' do
       authenticate!
       Micropost.create!({
         user: current_user,
-        content: params[:micropost][:content]
+        content: params[:content]
       })
     end
 
