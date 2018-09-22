@@ -7,7 +7,7 @@ gem 'sprockets'
 gem 'rake'
 gem 'bcrypt'
 gem 'faker'
-gem 'grape'
+gem 'grape', '1.1.0'
 gem 'webpacker', '~> 3.5'
 gem 'puma'
 gem 'pg', '~> 0.18'
@@ -22,7 +22,7 @@ group :development, :test do
 end
 
 group :test do
-    gem 'selenium-webdriver'
+    gem 'selenium-webdriver', '3.14.0'
     gem 'capybara'
     gem 'cucumber-rails', :require => false
     gem 'database_cleaner'
