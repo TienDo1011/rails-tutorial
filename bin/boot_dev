@@ -1,4 +1,22 @@
-#!/bin/bash -i
+if [ ! $(command -v brew) ]
+then
+  echo "=======> brew package manager not available, installing brew"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo "=======> brew package manager installed!"
+fi
+if [ ! $(command -v wget) ]
+then
+  echo "=======> wget not available, installing wget"
+  brew install wget
+  echo "=======> wget installed!"
+fi
+if [ ! -f /usr/local/bin/chromedriver ]
+then
+  echo "=======> chrome driver not available at /usr/local/bin/chromedriver, installing chromedriver"
+  wget "https://chromedriver.storage.googleapis.com/2.42/chromedriver_mac64.zip" -P tmp
+  unzip tmp/chromedriver_mac64.zip -d /usr/local/bin
+  echo "=======> chromedriver installed!"
+fi
 bundle install
 yarn install
 trap "kill $WDSPID; exit" SIGINT
