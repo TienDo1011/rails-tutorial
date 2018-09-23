@@ -10,7 +10,7 @@ gem 'faker'
 gem 'grape', '1.1.0'
 gem 'webpacker', '~> 3.5'
 gem 'puma'
-gem 'pg', '~> 0.18'
+gem 'pg', '0.20'
 gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
 
@@ -19,6 +19,8 @@ group :development, :test do
     gem 'rspec'
     gem 'factory_bot_rails'
     gem 'byebug'
+    gem 'pry-rails'
+    gem 'pry-doc'
 end
 
 group :test do
