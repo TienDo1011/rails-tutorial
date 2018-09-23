@@ -1,4 +1,13 @@
 #!/bin/bash -i
 bundle install
-./bin/webpack-dev-server&
-bundle exec rails s
+yarn install
+bin/webpack-dev-server&
+if [ $(ruby bin/db-exists.rb) == "true" ]
+then
+  echo "Database exists, running migration"
+  bin/rake db:migrate
+else
+  bin/rake db:create
+  bin/rake db:migrate
+fi
+bin/rails s
