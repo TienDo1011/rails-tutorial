@@ -7,20 +7,20 @@ const instance = axios.create({
 })
 
 function post(url, data) {
-  const rememberToken = getCurrentUser() && getCurrentUser().rememberToken;
-  instance.defaults.headers.common["Authorization"] = `Bearer ${rememberToken}`;
+  const token = getCurrentUser() && getCurrentUser().token;
+  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return instance.post(url, data).then(response => toCamelCase(response.data));
 }
 
 function get(url, data) {
-  const rememberToken = getCurrentUser() && getCurrentUser().rememberToken;
-  instance.defaults.headers.common["Authorization"] = `Bearer ${rememberToken}`;
+  const token = getCurrentUser() && getCurrentUser().token;
+  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return instance.get(url, { params: data }).then(response => toCamelCase(response.data));
 }
 
 function deleteRequest(url) {
-  const rememberToken = getCurrentUser() && getCurrentUser().rememberToken;
-  instance.defaults.headers.common["Authorization"] = `Bearer ${rememberToken}`;
+  const token = getCurrentUser() && getCurrentUser().token;
+  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return instance.delete(url).then(response => toCamelCase(response.data));
 }
 
