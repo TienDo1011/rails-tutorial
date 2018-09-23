@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ ! $(command -v brew) ]
 then
   echo "=======> brew package manager not available, installing brew"
@@ -27,6 +28,7 @@ then
   echo "Database exists, running migration"
   bin/rake db:migrate
 else
+  echo "Database does not exist, creating db & running migration"
   bin/rake db:create
   bin/rake db:migrate
 fi
