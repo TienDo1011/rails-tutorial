@@ -69,9 +69,15 @@ class Users < Grape::API
         error!('User not exist', 404)
       end
       user.authenticate(params[:password])
-      digest_token = User.digest(User.token)
+      token = User.token
+      digest_token = User.digest(token)
       user.update_attribute(:digest_token, digest_token)
-      user
+      {
+        token: token,
+        id: user.id,
+        email: user.email,
+        name: user.name
+      }
     end
 
     desc "Sign out"
