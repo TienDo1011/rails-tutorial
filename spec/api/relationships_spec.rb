@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Relationships do
   include Rack::Test::Methods
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:other_user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
 
   describe "POST /relationships" do
     context "authorized" do

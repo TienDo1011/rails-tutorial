@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe Microposts do
   include Rack::Test::Methods
-  
-  let(:user) { FactoryBot.create(:user) }
-  let(:other_user) { FactoryBot.create(:user) }
-  let!(:micropost) { FactoryBot.create(:micropost, user: user) }
+
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let!(:micropost) { create(:micropost, user: user) }
 
   describe "POST /microposts" do
     context "authorized" do
@@ -14,7 +14,7 @@ describe Microposts do
       it "creates micropost" do
         totalMicropost = Micropost.count
         userMicropostsCount = user.microposts.count
-        post "/api/microposts", micropost: { content: "Something" }
+        post "/api/microposts", content: "Something"
         expect(Micropost.count).to eq(totalMicropost + 1)
         expect(user.microposts.count).to eq(userMicropostsCount + 1)
         expect(last_response.status).to eq(201)

@@ -1,12 +1,12 @@
 class Microposts < Grape::API
   helpers AuthHelpers
-  
+
   resource :microposts do
     desc "Create a micropost"
     params do
       requires :content, type: String
     end
-    post '' do
+    post do
       authenticate!
       Micropost.create!({
         user: current_user,

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe Relationship do
-  let(:follower) { FactoryBot.create(:user) }
-  let(:followed) { FactoryBot.create(:user) }
+  let(:follower) { create(:user) }
+  let(:followed) { create(:user) }
   let(:relationship) { follower.relationships.build(followed_id: followed.id) }
 
   subject {relationship }

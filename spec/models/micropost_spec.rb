@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Micropost do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   before { @micropost = user.microposts.build(content: "Lorem ipsum") }
 
   subject { @micropost }

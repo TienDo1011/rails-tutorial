@@ -117,10 +117,10 @@ describe User do
   describe "micropost associations" do
     before { @user.save }
     let!(:older_micropost) do
-      FactoryBot.create(:micropost, user: @user, created_at: 1.day.ago)
+      create(:micropost, user: @user, created_at: 1.day.ago)
     end
     let!(:newer_micropost) do
-      FactoryBot.create(:micropost, user: @user, created_at: 1.hour.ago)
+      create(:micropost, user: @user, created_at: 1.hour.ago)
     end
 
     it "should have the right microposts in the right order" do
@@ -138,9 +138,9 @@ describe User do
 
     describe "feed" do
       let(:unfollowed_micropost) do
-        FactoryBot.create(:micropost, user: FactoryBot.create(:user))
+        create(:micropost, user: create(:user))
       end
-      let(:followed_user) { FactoryBot.create(:user) }
+      let(:followed_user) { create(:user) }
 
       before do
         @user.follow!(followed_user.id)
@@ -159,7 +159,7 @@ describe User do
   end
 
   describe "following" do
-    let(:other_user) { FactoryBot.create(:user) }
+    let(:other_user) { create(:user) }
     before do
       @user.save
       @user.follow!(other_user.id)

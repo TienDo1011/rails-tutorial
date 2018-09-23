@@ -1,6 +1,6 @@
 class Relationships < Grape::API
   helpers AuthHelpers
-  
+
   resource :relationships do
     desc "Create a relationship"
     params do
@@ -8,7 +8,7 @@ class Relationships < Grape::API
         requires :followed_id, type: String
       end
     end
-    post '/' do
+    post do
       authenticate!
       @user = User.find(params[:relationship][:followed_id])
       current_user.follow!(@user.id)

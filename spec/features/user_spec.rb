@@ -35,7 +35,7 @@ describe "User pages" do
       it { should_not have_link('delete') }
 
       describe "as an admin user" do
-        let(:admin) { FactoryBot.create(:admin) }
+        let(:admin) { create(:admin) }
         before do
           sign_in admin
           visit users_path
@@ -53,9 +53,9 @@ describe "User pages" do
   end
 
   describe "profile page" do
-    let(:user) { FactoryBot.create(:user) }
-    let!(:m1) { FactoryBot.create(:micropost, user: user, content: "Foo") }
-    let!(:m2) { FactoryBot.create(:micropost, user: user, content: "Bar") }
+    let(:user) { create(:user) }
+    let!(:m1) { create(:micropost, user: user, content: "Foo") }
+    let!(:m2) { create(:micropost, user: user, content: "Bar") }
 
     before { visit user_path(user) }
 
@@ -69,7 +69,7 @@ describe "User pages" do
     end
 
     describe "follow/unfollow buttons" do
-      let(:other_user) { FactoryBot.create(:user) }
+      let(:other_user) { create(:user) }
       before { sign_in user}
 
       describe "following a user" do
@@ -121,7 +121,7 @@ describe "User pages" do
 
   describe "signup page" do
     before { visit signup_path }
-    
+
     it { should have_content('Sign up') }
     it { should have_title(full_title('Sign up')) }
   end
@@ -160,12 +160,12 @@ describe "User pages" do
   end
 
   describe "edit" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
     before do
       sign_in user
       visit edit_user_path(user)
     end
-    
+
     describe "page" do
       it { should have_content("Update your profile") }
       it { should have_title("Edit user") }
@@ -198,8 +198,8 @@ describe "User pages" do
   end
 
   describe "following/followers" do
-    let(:user) { FactoryBot.create(:user) }
-    let(:other_user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
     before { user.follow!(other_user.id) }
 
     describe "followed users" do
@@ -218,7 +218,7 @@ describe "User pages" do
         sign_in other_user
         visit followers_user_path(other_user)
       end
-  
+
       it { should have_title(full_title('Followers')) }
       it { should have_selector('h3', text: 'Followers') }
       it { should have_link(user.name, href: user_path(user)) }
