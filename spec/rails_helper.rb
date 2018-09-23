@@ -65,19 +65,3 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryBot::Syntax::Methods
 end
-
-Capybara.register_driver :chrome do |app|
-  require 'selenium/webdriver'
-  Selenium::WebDriver::Chrome.driver_path = "/usr/local/bin/chromedriver"
-  Capybara::Selenium::Driver.new(
-   app,
-   :browser => :chrome,
-   desired_capabilities: {
-      "chromeOptions" => {
-       "args" => %w{ window-size=1920,1080 no-sandbox user-data-dir=/root }
-     }
-    }
-  )
-end
-
-Capybara.default_driver = :chrome
