@@ -1,7 +1,9 @@
 #!/bin/bash -i
 bundle install
 yarn install
+trap "kill $WDSPID; exit" SIGINT
 bin/webpack-dev-server&
+WDSPID=$!
 if [ $(ruby bin/db-exists.rb) == "true" ]
 then
   echo "Database exists, running migration"
