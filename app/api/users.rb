@@ -69,15 +69,15 @@ class Users < Grape::API
         error!('User not exist', 404)
       end
       user.authenticate(params[:password])
-      remember_token = User.digest(User.new_remember_token)
-      user.update_attribute(:remember_token, remember_token)
+      digest_token = User.digest(User.token)
+      user.update_attribute(:digest_token, digest_token)
       user
     end
 
     desc "Sign out"
     post "signout" do
       authenticate!
-      current_user.update_attribute(:remember_token, nil)
+      current_user.update_attribute(:digest_token, nil)
     end
 
     desc "Update current user's profile"
@@ -120,7 +120,7 @@ class Users < Grape::API
       @user = User.find(params[:id])
       @user.followed_users.limit(User::USERS_PER_PAGE).offset(offset)
     end
-    
+
     desc "Get an user's followers"
     params do
       requires :id, type: String

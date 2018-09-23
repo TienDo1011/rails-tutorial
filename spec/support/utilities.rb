@@ -2,9 +2,9 @@
 
 def sign_in(user, options={})
   if options[:no_capybara]
-    remember_token = User.new_remember_token
-    user.update_attribute(:remember_token, User.digest(remember_token))
-    header "Authorization", "Bearer #{remember_token}"
+    token = User.token
+    user.update_attribute(:digest_token, User.digest(token))
+    header "Authorization", "Bearer #{token}"
   else
     visit "/signin"
     fill_in "Email", with: user.email

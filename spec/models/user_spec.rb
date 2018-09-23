@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User do
-  
+
   before do
     @user = User.new(name: "Example User", email: "user@example.com",
                               password: "foobar", password_confirmation: "foobar")
@@ -14,7 +14,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-  it { should respond_to(:remember_token) }
+  it { should respond_to(:digest_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:microposts) }
@@ -96,7 +96,7 @@ describe User do
 
     describe "with invalid password" do
       let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-    
+
       it { should_not eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_falsey }
     end
@@ -109,8 +109,8 @@ describe User do
 
   describe "remember token" do
     before {@user.save}
-    it "creates remember_token" do
-      expect(subject.remember_token).not_to be_blank
+    it "creates digest_token" do
+      expect(subject.digest_token).not_to be_blank
     end
   end
 

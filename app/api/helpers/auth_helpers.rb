@@ -1,9 +1,9 @@
 module AuthHelpers
   extend Grape::API::Helpers
-  
+
   def current_user
-    remember_token = request.headers["Authorization"].split(" ")[1] if request.headers["Authorization"];
-    @current_user ||= User.find_by(remember_token: remember_token)
+    token = request.headers["Authorization"].split(" ")[1] if request.headers["Authorization"];
+    @current_user ||= User.find_by(digest_token: User.digest(token))
   end
 
   def authenticate!
