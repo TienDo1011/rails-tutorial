@@ -1,8 +1,8 @@
 @javascript
-Feature: Authentication
+Feature: Home page
   As an user
-  I want to sign in
-  So that I can enjoy the app more
+  I want to view the home page
+  So that I can read feeds and some statistics
 
   Background:
     Given There is an user
