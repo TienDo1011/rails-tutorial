@@ -11,7 +11,7 @@ Feature: Authentication
     When I visit sign in page
     And I click on "Sign in" button
     Then I see sign in error
-    Then I visit another page
+    Then I visit the home page
     And I do not see error
 
   Scenario: Sign in with valid information

@@ -15,7 +15,7 @@ Then /I see sign in error/ do
   expect(page).to have_selector('div.alert.alert-danger')
 end
 
-Then /I visit another page/ do
+Then /I visit the home page/ do
   click_link "Home"
 end
 
