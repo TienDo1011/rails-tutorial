@@ -66,7 +66,7 @@ Capybara.register_driver :chrome do |app|
    :browser => :chrome,
    desired_capabilities: {
       "chromeOptions" => {
-       "args" => %w{ window-size=1920,1080 no-sandbox user-data-dir=tmp/user-data-dir auto-open-devtools-for-tabs }
+       "args" => %w{ window-size=375,812 no-sandbox user-data-dir=tmp/user-data-dir auto-open-devtools-for-tabs }
      }
     }
   )
