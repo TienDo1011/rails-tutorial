@@ -73,3 +73,12 @@ Capybara.register_driver :chrome do |app|
 end
 
 Capybara.javascript_driver = :chrome
+
+After do
+  if Capybara.current_driver == :chrome
+    page.execute_script <<-JAVASCRIPT
+      localStorage.clear();
+      sessionStorage.clear();
+    JAVASCRIPT
+  end
+end
