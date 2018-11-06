@@ -6,10 +6,6 @@ When /I visit sign in page/ do
   visit "/signin"
 end
 
-And /I click on "([\w\s]+)" button/ do |text|
-  click_button text
-end
-
 Then /I see sign in error/ do
   expect(page).to have_content("Sign in")
   expect(page).to have_selector('div.alert.alert-danger')
@@ -17,10 +13,6 @@ end
 
 Then /I visit the home page/ do
   click_link "Home"
-end
-
-And /I do not see error/ do
-  expect(page).to have_no_selector('div.alert.alert-danger')
 end
 
 And /I fill in user sign in information/ do
