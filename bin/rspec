@@ -1,2 +1,2 @@
 #!/bin/bash
-rspec $1
+bundle exec rspec $1
