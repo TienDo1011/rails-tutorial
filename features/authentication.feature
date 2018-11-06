@@ -9,7 +9,7 @@ Feature: Authentication
 
   Scenario: Sign in with invalid information
     When I visit sign in page
-    And I click on "Sign in" button
+    And I click on the "Sign in" button
     Then I see sign in error
     Then I visit the home page
     And I do not see error
@@ -17,7 +17,7 @@ Feature: Authentication
   Scenario: Sign in with valid information
     When I visit sign in page
     And I fill in user sign in information
-    And I click on "Sign in" button
+    And I click on the "Sign in" button
     Then I see navbar for login user
     Then I sign out
     Then I am back to sign in page
