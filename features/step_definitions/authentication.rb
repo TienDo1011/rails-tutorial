@@ -1,4 +1,4 @@
-Given /There is an user/ do
+Given /I have an account/ do
   @user = create(:user)
 end
 
@@ -50,7 +50,7 @@ When /I visit the users index page/ do
   visit "/users"
 end
 
-Given /I signed in/ do
+Given /I sign in/ do
   visit "/users/#{@user.id}/edit"
   fill_in "Email", with: @user.email
   fill_in "Password", with: @user.password

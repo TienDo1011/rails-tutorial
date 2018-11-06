@@ -14,7 +14,7 @@ And(/I see user's follower\/following counts/) do
   expect(page).to have_content("1 followers")
 end
 
-And(/There is another user following the first user/) do
+And(/There is another user following me/) do
   other_user = create(:user)
   other_user.follow!(@user)
 end

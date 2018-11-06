@@ -5,8 +5,8 @@ Feature: Micropost
   So that I can show my thinking
 
   Background:
-    Given There is an user
-    And I signed in
+    Given I have an account
+    And I sign in
 
   Scenario: Create post with invalid information
     When I visit the home page

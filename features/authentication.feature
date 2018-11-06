@@ -5,7 +5,7 @@ Feature: Authentication
   So that I can enjoy the app more
 
   Background:
-    Given There is an user
+    Given I have an account
 
   Scenario: Sign in with invalid information
     When I visit sign in page
@@ -31,5 +31,5 @@ Feature: Authentication
     Then I am redirected back to sign in
 
   Scenario: Signed in users visit protected page
-    Given I signed in
+    Given I sign in
     Then I am on profile page
