@@ -40,9 +40,16 @@ class Users < Grape::API
       requires :id, type: String
     end
     get ':id' do
-      User.find(params[:id])
-      # @microposts = @user.microposts.limit(Micropost::MICROPOSTS_PER_PAGE).offset(offset)
-      # { user: @user, microposts: @microposts }
+      user = User.find(params[:id])
+      microposts = user.microposts.limit(Micropost::MICROPOSTS_PER_PAGE).offset(offset)
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        microposts: microposts,
+        followings: user.followed_users,
+        followers: user.followers
+      }
     end
 
     desc "Create an user"
