@@ -12,6 +12,12 @@ function post(url, data) {
   return instance.post(url, data).then(response => toCamelCase(response.data));
 }
 
+function put(url, data) {
+  const token = getCurrentUser() && getCurrentUser().token;
+  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  return instance.put(url, data).then(response => toCamelCase(response.data));
+}
+
 function get(url, data) {
   const token = getCurrentUser() && getCurrentUser().token;
   instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -24,4 +30,4 @@ function deleteRequest(url) {
   return instance.delete(url).then(response => toCamelCase(response.data));
 }
 
-export { get, post, deleteRequest };
+export { get, post, put, deleteRequest };
