@@ -63,7 +63,7 @@ class Home extends Component {
                   <UserInfo {...{ currentUser, microposts }}/>
                 </section>
                 <section>
-                  <Stats {...{ followings, followers }} />
+                  <Stats id={currentUser.id} {...{ followings, followers }} />
                 </section>
                 <section>
                   <MicropostForm handleCreateMicropostSuccess={this.addToFeed} />
@@ -80,7 +80,7 @@ class Home extends Component {
           !isSignedIn && (
             <div className="center hero-unit">
                 <h1>Welcome to the Sample App</h1>
-            
+
                 <h2>
                   This is the home page for the
                   <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>

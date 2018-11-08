@@ -36,7 +36,7 @@ class Users extends Component {
       <div>
         <h1>All users</h1>
         <ul className="users">
-          {this.state.users.map(user => <User user={user} />)}
+          {this.state.users.map(user => <User key={user.id} user={user} />)}
           {
             (totalPages > 1) && (
               <nav aria-label="Page navigation">

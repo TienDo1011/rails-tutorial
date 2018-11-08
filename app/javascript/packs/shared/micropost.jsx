@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import timeAgo from 'time-ago';
-import axios from 'axios';
+import { deleteRequest } from 'axios';
 
 class Micropost extends Component {
-
   handleDelete = (ev) => {
     ev.preventDefault();
     const { micropost } = this.props;
     const confirmed = confirm('You sure?');
     if (confirmed) {
-      axios.delete(`/microposts/${micropost.id}`);
+      deleteRequest(`/microposts/${micropost.id}`);
     }
   }
   render() {
-    const { micropost } = this.props;
-    const isOwner = currentUser.id === micropost.id;
+    const { micropost, user } = this.props;
+    const isOwner = user.id === micropost.user_id;
     return (
       <div>
         <li>
@@ -23,7 +22,7 @@ class Micropost extends Component {
             Posted {timeAgo.ago(micropost.created_at)}.
           </span>
           {
-            isOwner && <a href="#" onClick={handleDelete}>Delete</a>
+            isOwner && <a href="javascript:void(0);" onClick={this.handleDelete}>Delete</a>
           }
         </li>
       </div>

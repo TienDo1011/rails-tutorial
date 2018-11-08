@@ -8,12 +8,12 @@ const ErrorMessages = ({ errors }) => {
       {
         hasErrors && (
           <div id="error_explanation">
-            <div class="alert alert-error">
+            <div className="alert alert-danger">
               The form contains {pluralize("error", errors.length)}.
             </div>
             <ul>
               {
-                errors.forEach(msg => <li>* {msg} </li>)
+                errors.map(msg => <li>* {msg} </li>)
               }
             </ul>
           </div>

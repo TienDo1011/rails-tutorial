@@ -5,30 +5,30 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { BrowserRouter as Router, Route, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import md5 from 'blueimp-md5';
 
 import { Footer, Header } from './layouts'
 import { Home, Help, About, Contact } from './static-pages'
-import { Signin } from "./auth";
+import { Signin, Signup } from "./auth";
 import { checkSignIn } from './utils/auth';
 
-import { Users, EditUser } from './users';
+import { Users, ShowUser, EditUser, ShowFollowings, ShowFollowers } from './users';
 
-const PrivateRoute = withRouter(({ component: Component, path, history }) => {
+const PrivateRoute = ({ component: Component, path }) => {
   const isSignedIn = checkSignIn();
   return (
-    <Route path={path} render={() =>
+    <Route path={path} render={ props =>
       isSignedIn ?
-        <Component /> :
+        <Component match={props.match} /> :
         <Redirect to={{
           pathname: "/signin",
-          state: { from: history.location.pathname }
-        }} 
+          state: { from: props.history.location.pathname }
+        }}
       />}
     />)
-})
+}
 
 class Main extends Component {
   state = {
@@ -42,7 +42,7 @@ class Main extends Component {
     })
   }
 
-  handleUpdateSignIn = ({ isSignedIn }) => {
+  handleUpdateAuthState = ({ isSignedIn }) => {
     this.setState({
       isSignedIn
     })
@@ -56,11 +56,15 @@ class Main extends Component {
           <Header isSignedIn={isSignedIn} updateSignIn={this.handleUpdateSignIn} />
           <Route exact path="/" component={Home} />
           <Route exact path="/users" component={Users} />
-          <PrivateRoute path="/users/:id/edit" component={EditUser} />
+          <PrivateRoute path="/users/:id" component={ShowUser} />
+          <PrivateRoute path="/profile" component={EditUser} />
+          <PrivateRoute path="/users/:id/followings" component={ShowFollowings} />
+          <PrivateRoute path="/users/:id/followers" component={ShowFollowers} />
           <Route path="/help" component={Help} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
-          <Route path="/signin" render={() => <Signin updateSignIn={this.handleUpdateSignIn}/>} />
+          <Route path="/signin" render={() => <Signin updateAuthState={this.handleUpdateAuthState}/>} />
+          <Route path="/signup" render={() => <Signup updateAuthState={this.handleUpdateAuthState}/>} />
           <Footer />
         </div>
       </Router>

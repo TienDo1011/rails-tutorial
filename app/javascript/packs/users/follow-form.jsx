@@ -1,51 +1,58 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from "axios";
+import { get, post } from "../utils/request";
+import { getCurrentUser } from '../utils/user';
 
 class View extends Component {
   state = {
     followings: []
   }
+
   componentDidMount() {
-    axios
-      .get(`/users/${currentUser.id}/following`)
+    get(`/users/${this.currentUser.id}/followings`)
       .then(followings => this.setState({ followings }) )
   }
 
   unfollow = () => {
-    axios
-      .post(`/users/unfollow`, { id: this.props.user.id })
+    post(`/users/unfollow`, { id: this.props.userId })
       .then(() => {
-        axios
-          .get(`/users/${currentUser.id}/following`)
-          .then(followings => this.setState({ followings }) )
+        get(`/users/${this.currentUser.id}/followings`)
+          .then(followings => {
+            this.setState({ followings })
+            this.props.fetchUser();
+          })
       })
   }
 
-  unfollow = () => {
-    axios
-      .post(`/users/follow`, { id: this.props.user.id })
+  follow = () => {
+    post(`/users/follow`, { id: this.props.userId })
       .then(() => {
-        axios
-          .get(`/users/${currentUser.id}/following`)
-          .then(followings => this.setState({ followings }) )
+        get(`/users/${this.currentUser.id}/followings`)
+          .then(followings => {
+            this.setState({ followings })
+            this.props.fetchUser();
+          })
       })
   }
-  
+
+  get currentUser() {
+    return getCurrentUser();
+  }
+
   render() {
-    const { user } = this.props;
-    const isCurrentUser = currentUser.id === user.id;
-    const isFollowing = this.state.followings.some(u => u.id === user.id);
+    const { userId } = this.props;
+    const isCurrentUser = this.currentUser.id === userId;
+    const isFollowing = this.state.followings.some(u => u.id === userId);
     return (
       <div>
         { !isCurrentUser && (
           <div id="follow_form">
           {
-            isFollowing && 
+            isFollowing &&
               <button className="btn btn-large" onClick={this.unfollow}>Unfollow</button>
           }
           {
-            !isFollowing && 
+            !isFollowing &&
               <button className="btn btn-large btn-primary" onClick={this.follow}>Follow</button>
           }
           </div>

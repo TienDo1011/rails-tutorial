@@ -11,7 +11,7 @@ class View extends Component {
 
   updateAuthState = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
-    this.props.updateSignIn({
+    this.props.updateAuthState({
       isSignedIn: true
     })
   }

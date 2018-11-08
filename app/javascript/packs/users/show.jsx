@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from "axios";
+import { get } from "../utils/request";
 import { gravatarFor } from '../utils/user';
 import { Stats, Micropost } from '../shared';
 import { checkSignIn } from '../utils/auth';
+import FollowForm from "./follow-form"
 
 class View extends Component {
   state = {
     user: null,
   }
   componentDidMount() {
+    this.fetchUser();
+  }
+
+  fetchUser = () => {
     const { match } = this.props;
-    axios
-      .get(`/users/${match.params.id}`)
+    get(`/users/${match.params.id}`)
       .then(user => this.setState({ user }));
   }
+
   render() {
     const { user } = this.state;
-    const hasMicroposts = user.micropost.length > 0;
+    if (!user) {
+      return null;
+    }
+    const hasMicroposts = user && user.microposts.length > 0;
+    const isSignedIn = checkSignIn();
     return (
       <div>
         <div className="row">
@@ -29,12 +38,12 @@ class View extends Component {
               </h1>
             </section>
             <section>
-              <Stats />
+              <Stats {...user}/>
             </section>
           </aside>
           <div className="span8">
             {
-              isSignedIn && <FollowForm user={user} />
+              isSignedIn && <FollowForm userId={user.id} fetchUser={this.fetchUser} />
             }
             {
               hasMicroposts && (
@@ -42,7 +51,7 @@ class View extends Component {
                   <h3>Microposts ({ user.microposts.length })</h3>
                   <ol className="microposts">
                     {
-                      user.microposts.map(micropost => <Micropost micropost={micopost} />)
+                      user.microposts.map(micropost => <Micropost micropost={micropost} user={user} />)
                     }
                   </ol>
                 </div>
