@@ -65,6 +65,55 @@ class Users < Grape::API
       User.create!(params[:user])
     end
 
+    desc "Update user profile"
+    params do
+      requires :id, type: Integer
+      requires :name, type: String
+      requires :email, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    put ":id" do
+      user = User.find(params[:id])
+      user.update!(params)
+      token = User.token
+      digest_token = User.digest(token)
+      user.update_attribute(:digest_token, digest_token)
+      {
+        token: token,
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        admin: user.admin
+      }
+    end
+
+    desc "Sign up"
+    params do
+      requires :name, type: String
+      requires :email, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    post "signup" do
+      user = User.create(params)
+      err = user.errors.messages
+      if err.count > 0
+        error!({ messages: err }, 422)
+      else
+        token = User.token
+        digest_token = User.digest(token)
+        user.update_attribute(:digest_token, digest_token)
+        {
+          token: token,
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          admin: user.admin
+        }
+      end
+    end
+
     desc "Sign in"
     params do
       requires :email, type: String
