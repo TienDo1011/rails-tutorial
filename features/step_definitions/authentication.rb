@@ -51,7 +51,7 @@ When /I visit the users index page/ do
 end
 
 Given /I sign in/ do
-  visit "/users/#{@user.id}/edit"
+  visit "/signin"
   fill_in "Email", with: @user.email
   fill_in "Password", with: @user.password
   click_button "Sign in"
@@ -60,4 +60,12 @@ end
 Then /I am on profile page/ do
   expect(page).to have_content('Update your profile')
   page.execute_script("localStorage.clear()")
+end
+
+And(/I am on the home page/) do
+  expect(page).to have_content("Micropost Feed")
+end
+
+When(/I visit the profile page/) do
+  visit "/profile"
 end

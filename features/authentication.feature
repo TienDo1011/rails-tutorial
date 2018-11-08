@@ -32,4 +32,8 @@ Feature: Authentication
 
   Scenario: Signed in users visit protected page
     Given I sign in
-    Then I am on profile page
+    And I am on the home page
+    When I click on "Account" link
+    And I see "Sign out" link
+    When I visit the profile page
+    Then I see "Update your profile"
