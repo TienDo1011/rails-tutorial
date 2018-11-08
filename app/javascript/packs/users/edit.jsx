@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import { put } from "../utils/request";
 import { ErrorMessages } from "../shared";
 import { gravatarFor, getCurrentUser } from "../utils/user";
 
@@ -9,7 +9,8 @@ class View extends Component {
     email: "",
     password: "",
     password_confirmation: "",
-    errors: null
+    errors: null,
+    update_success: false
   }
 
   componentDidMount() {
@@ -20,11 +21,28 @@ class View extends Component {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = (ev) => {
+    ev.preventDefault();
+    const { name, email, password, password_confirmation } = this.state;
     const currentUser = getCurrentUser();
-    axios
-      .put(`/users/${currentUser.id}`, this.state)
-      .catch(errors => this.setState({errors}));
+    const params = {
+      id: currentUser.id,
+      name,
+      email,
+      password,
+      password_confirmation
+    };
+    put(`/users/${currentUser.id}`, params)
+      .then(user => {
+        this.setState({ update_success: true })
+        this.hideUpdateSuccess = setTimeout(() => {
+          this.setState({ update_success: false })
+        }, 5000)
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+      .catch(err => {
+        this.setState({ errors: [err.message] })
+      });
   }
 
   handleChange = (ev) => {
@@ -32,13 +50,19 @@ class View extends Component {
       [ev.target.id]: ev.target.value
     });
   }
+
+  componentWillUnmount() {
+    clearTimeout(this.hideUpdateSuccess)
+  }
+
   render() {
     const {
       name,
       email,
       password,
       password_confirmation,
-      errors
+      errors,
+      update_success
     } = this.state;
     const currentUser = getCurrentUser();
     return (
@@ -47,6 +71,11 @@ class View extends Component {
           <div className="row">
             <div className="span6 offset3">
               <form onSubmit={this.handleSubmit}>
+                { update_success && (
+                  <div class="alert alert-success">
+                    Profile updated
+                  </div>
+                )}
                 {errors && <ErrorMessages errors={errors} />}
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
