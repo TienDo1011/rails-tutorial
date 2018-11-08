@@ -29,20 +29,24 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self)
   end
 
-  def following?(other_user)
-    relationships.find_by(followed_id: other_user.id)
+  def following?(user_or_id)
+    relationships.find_by(followed_id: extract_id(user_or_id))
   end
 
-  def follow!(other_user)
-    relationships.create!(followed_id: other_user.id)
+  def follow!(user_or_id)
+    relationships.create!(followed_id: extract_id(user_or_id))
   end
 
-  def unfollow!(other_user)
-    relationships.find_by(followed_id: other_user.id).destroy
+  def unfollow!(user_or_id)
+    relationships.find_by(followed_id: extract_id(user_or_id)).destroy
   end
 
   private
     def create_digest_token
       self.digest_token = User.digest(User.token)
+    end
+
+    def extract_id(user_or_id)
+      user_or_id.is_a?(String) ? user_or_id : user_or_id.id
     end
 end
