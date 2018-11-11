@@ -33,6 +33,7 @@ Feature: User
 
   Scenario: View profile page
     Given I have an account
+    And I sign in
     And I have 2 microposts
     When I visit my profile page
     Then I see my name

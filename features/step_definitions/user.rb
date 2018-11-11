@@ -66,7 +66,7 @@ And(/I see total micropost count/) do
   expect(page).to have_content(@microposts.count)
 end
 
-Given(/There is another user/) do
+Given(/^There is another user$/) do
   @another_user = create(:user)
 end
 

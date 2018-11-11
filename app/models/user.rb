@@ -47,6 +47,6 @@ class User < ActiveRecord::Base
     end
 
     def extract_id(user_or_id)
-      user_or_id.is_a?(String) ? user_or_id : user_or_id.id
+      user_or_id.is_a?(Integer) ? user_or_id : user_or_id.id
     end
 end

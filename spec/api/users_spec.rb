@@ -12,7 +12,7 @@ describe Users do
         }.to change(User, :count).by(1)
       end
     end
-  
+
     context "with invalid info" do
       it "do not create user" do
         user[:password] = "foo"
@@ -27,12 +27,12 @@ describe Users do
   let!(:admin_attributes) { attributes_for(:admin, name: 'Tien') }
   let!(:admin_user) { User.create(admin_attributes) }
   let!(:other_user) { create(:user) }
-  describe "PATCH /users/:id" do
+  describe "PUT /users/:id" do
     context "authorized" do
       before { sign_in admin_user, no_capybara: true }
       it "updates user" do
         admin_attributes[:name] = 'Tien do'
-        put "/api/users/#{admin_user.id}", user: admin_attributes
+        put "/api/users/#{admin_user.id}", admin_attributes
         expect(admin_user.reload.name).to eq('Tien do')
       end
     end
@@ -40,7 +40,7 @@ describe Users do
     context "not authorized" do
       it "do not update user" do
         admin_attributes[:name] = 'Tien do'
-        put "/api/users/#{admin_user.id}", user: admin_attributes
+        put "/api/users/#{admin_user.id}", admin_attributes
         expect(admin_user.reload.name).to eq('Tien')
         expect(last_response.status).to eq(401)
       end

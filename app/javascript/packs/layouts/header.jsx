@@ -14,7 +14,7 @@ class Header extends Component {
 
   updateAuthState = (user) => {
     localStorage.removeItem('user');
-    this.props.updateSignIn({
+    this.props.updateAuthState({
       isSignedIn: false,
     })
   }

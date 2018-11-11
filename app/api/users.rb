@@ -37,7 +37,7 @@ class Users < Grape::API
 
     desc "Get an user details"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     get ':id' do
       user = User.find(params[:id])
@@ -74,6 +74,7 @@ class Users < Grape::API
       requires :password_confirmation, type: String
     end
     put ":id" do
+      authenticate!
       user = User.find(params[:id])
       user.update!(params)
       token = User.token
@@ -143,23 +144,9 @@ class Users < Grape::API
       current_user.update_attribute(:digest_token, nil)
     end
 
-    desc "Update current user's profile"
-    params do
-      requires :user, type: Hash do
-        requires :name, type: String
-        requires :email, type: String
-        requires :password, type: String
-        requires :password_confirmation, type: String
-      end
-    end
-    put ":id" do
-      authenticate!
-      current_user.update_attributes(params[:user])
-    end
-
     desc "Destroy an user"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     delete ":id" do
       check_admin!
@@ -168,7 +155,7 @@ class Users < Grape::API
 
     desc "Get an user's micropost list"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     get ":id/microposts" do
       @user = User.find(params[:id])
@@ -177,7 +164,7 @@ class Users < Grape::API
 
     desc "Get an user's following list"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     get ":id/followings" do
       @user = User.find(params[:id])
@@ -186,7 +173,7 @@ class Users < Grape::API
 
     desc "Get an user's followers"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     get ":id/followers" do
       @user = User.find(params[:id])
@@ -195,7 +182,7 @@ class Users < Grape::API
 
     desc "Follow an user"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     post "follow" do
       authenticate!
@@ -204,7 +191,7 @@ class Users < Grape::API
 
     desc "Unfollow an user"
     params do
-      requires :id, type: String
+      requires :id, type: Integer
     end
     post "unfollow" do
       authenticate!

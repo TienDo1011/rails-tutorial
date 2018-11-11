@@ -53,7 +53,7 @@ class Main extends Component {
     return (
       <Router>
         <div>
-          <Header isSignedIn={isSignedIn} updateSignIn={this.handleUpdateSignIn} />
+          <Header isSignedIn={isSignedIn} updateAuthState={this.handleUpdateAuthState} />
           <Route exact path="/" component={Home} />
           <Route exact path="/users" component={Users} />
           <PrivateRoute path="/users/:id" component={ShowUser} />
