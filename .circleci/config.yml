@@ -42,16 +42,15 @@ jobs:
 
       # run tests!
       - run:
-          name: run tests
+          name: run rspec tests
           command: |
-            mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec" | circleci tests split --split-by=timings)"
 
             bin/rspec $TEST_FILES
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+      - run:
+          name: run cucumber tests
+          command: |
+            TEST_FILES="$(circleci tests glob "features" | circleci tests split --split-by=timings)"
+
+            bin/cucumber $TEST_FILES
