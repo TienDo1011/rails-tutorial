@@ -36,6 +36,10 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      # Compile Frontend assets
+      - run: yarn install
+      - run: bin/rake webpacker:compile
+
       # Database setup
       - run: bin/rake db:create
       - run: bin/rake db:schema:load
