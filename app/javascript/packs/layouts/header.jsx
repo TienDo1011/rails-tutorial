@@ -56,7 +56,7 @@ class Header extends Component {
             <div className="container">
               <div className="clearfix">
                 <Link to="/" id="logo">Sample App</Link>
-                <div className="visible-xs pull-right" onClick={toggleNavBar}>
+                <div className="visible-xs pull-right" id="menu" onClick={toggleNavBar}>
                   <i
                     className="fa fa-bars fa-3x"
                     style={{"color": "white"}}

@@ -70,8 +70,9 @@ Feature: User
     When I fill in valid sign up information
     And I click on the "Create my account" button
     Then I am on the home page
-    When I click on "Account" link
-    And I see "Sign out" link
+    When I click on the menu icon
+    And I click on "Account" link
+    Then I see "Sign out" link
 
   Scenario: Edit profile
     Given I have an account

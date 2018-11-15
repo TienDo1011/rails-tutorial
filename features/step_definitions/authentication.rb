@@ -11,8 +11,12 @@ Then /I see sign in error/ do
   expect(page).to have_selector('div.alert.alert-danger')
 end
 
-Then /I visit the home page/ do
-  click_link "Home"
+When /I click on the menu icon/ do
+  page.find("#menu").click
+end
+
+And /I click on the "([\w\s]+)" link/ do |text|
+  click_link text
 end
 
 And /I fill in user sign in information/ do

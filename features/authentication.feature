@@ -11,13 +11,15 @@ Feature: Authentication
     When I visit sign in page
     And I click on the "Sign in" button
     Then I see sign in error
-    Then I visit the home page
+    When I click on the menu icon
+    And I click on the "Home" link
     And I do not see error
 
   Scenario: Sign in with valid information
     When I visit sign in page
     And I fill in user sign in information
     And I click on the "Sign in" button
+    When I click on the menu icon
     Then I see navbar for login user
     Then I sign out
     Then I am back to sign in page
@@ -33,7 +35,8 @@ Feature: Authentication
   Scenario: Signed in users visit protected page
     Given I sign in
     And I am on the home page
-    When I click on "Account" link
-    And I see "Sign out" link
+    When I click on the menu icon
+    And I click on "Account" link
+    Then I see "Sign out" link
     When I visit the profile page
     Then I see "Update your profile"

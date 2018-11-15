@@ -18,3 +18,7 @@ And(/^There is another user following me$/) do
   other_user = create(:user)
   other_user.follow!(@user)
 end
+
+When /I visit the home page/ do
+  visit "/"
+end

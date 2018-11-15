@@ -74,7 +74,7 @@ class Main extends Component {
             resetShowNavBar={this.resetShowNavBar}
           />
           <Route exact path="/" component={Home} />
-          <Route exact path="/users" component={Users} />
+          <PrivateRoute exact path="/users" component={Users} />
           <PrivateRoute path="/users/:id" component={ShowUser} />
           <PrivateRoute path="/profile" component={EditUser} />
           <PrivateRoute path="/users/:id/followings" component={ShowFollowings} />
