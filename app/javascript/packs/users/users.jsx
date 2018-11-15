@@ -40,7 +40,7 @@ class Users extends Component {
           {
             (totalPages > 1) && (
               <nav aria-label="Page navigation">
-                <ul class="pagination">
+                <ul className="pagination">
                   <li>
                     <a href="javascript:void(0);" aria-label="Previous" onClick={() => this.handlePageClick(this.currentPage - 1)}>
                       <span aria-hidden="true">&laquo;</span>

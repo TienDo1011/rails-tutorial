@@ -72,7 +72,7 @@ class View extends Component {
             <div className="span6 offset3">
               <form onSubmit={this.handleSubmit}>
                 { update_success && (
-                  <div class="alert alert-success">
+                  <div className="alert alert-success">
                     Profile updated
                   </div>
                 )}

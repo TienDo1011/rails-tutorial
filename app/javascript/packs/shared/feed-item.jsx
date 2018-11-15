@@ -21,11 +21,11 @@ class FeedItem extends Component {
     return (
       <li id={item.id} className="feed-item">
         <a><img src={gravatarFor({ email: item.userEmail })} /></a>
-        <span class="user">
+        <span className="user">
           <Link to={`/users/${item.userId}`}>{item.userName}</Link>
         </span>
-        <span class="content">{item.content}</span>
-        <span class="timestamp">
+        <span className="content">{item.content}</span>
+        <span className="timestamp">
           Posted {timeAgo.ago(item.created_at)}.
         </span>
         {
@@ -35,7 +35,7 @@ class FeedItem extends Component {
         }
       </li>
     );
-  } 
+  }
 }
 
 export default FeedItem;

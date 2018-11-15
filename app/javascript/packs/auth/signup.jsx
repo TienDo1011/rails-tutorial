@@ -42,8 +42,8 @@ class View extends Component {
       <div className="container">
         <h1>Sign up</h1>
 
-        <div class="row">
-          <div class="span6 offset3">
+        <div className="row">
+          <div className="span6 offset3">
             { error && <div className="alert alert-danger">{error}</div> }
             <form onSubmit={this.handleSignup}>
               <div className="form-group">

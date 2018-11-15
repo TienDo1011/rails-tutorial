@@ -65,7 +65,7 @@ class Main extends Component {
     const { isSignedIn, showNavBar } = this.state;
     return (
       <Router>
-        <div>
+        <div className="container">
           <Header
             isSignedIn={isSignedIn}
             updateAuthState={this.handleUpdateAuthState}

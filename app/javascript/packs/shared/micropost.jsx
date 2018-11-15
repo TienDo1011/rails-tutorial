@@ -17,8 +17,8 @@ class Micropost extends Component {
     return (
       <div>
         <li>
-          <span class="content">{micropost.content}</span>
-          <span class="timestamp">
+          <span className="content">{micropost.content}</span>
+          <span className="timestamp">
             Posted {timeAgo.ago(micropost.created_at)}.
           </span>
           {
