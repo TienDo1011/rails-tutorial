@@ -5,7 +5,7 @@ import { post } from "../utils/request";
 class Header extends Component {
   state = {
     openDropdown: false,
-    error: ''
+    error: '',
   }
 
   toggleDropdown = () => {
@@ -39,16 +39,31 @@ class Header extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { location, resetShowNavBar } = this.props;
+    if (location.pathname !== prevProps.location.pathname) {
+      resetShowNavBar();
+    }
+  }
+
   render() {
     const { openDropdown, error } = this.state;
-    const { isSignedIn } = this.props;
+    const { isSignedIn, showNavBar, toggleNavBar } = this.props;
     return (
       <React.Fragment>
         <header className="navbar navbar-fixed-top navbar-inverse">
           <div className="navbar-inner">
             <div className="container">
-              <Link to="/" id="logo">Sample App</Link>
-              <nav>
+              <div className="clearfix">
+                <Link to="/" id="logo">Sample App</Link>
+                <div className="visible-xs pull-right" onClick={toggleNavBar}>
+                  <i
+                    className="fa fa-bars fa-3x"
+                    style={{"color": "white"}}
+                  ></i>
+                </div>
+              </div>
+              <nav className={showNavBar ? "" : "hidden-xs"}>
                 <ul className="nav navbar-nav pull-right">
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/help">Help</Link></li>

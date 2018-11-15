@@ -32,7 +32,8 @@ const PrivateRoute = ({ component: Component, path }) => {
 
 class Main extends Component {
   state = {
-    isSignedIn: false
+    isSignedIn: false,
+    showNavBar: false
   }
 
   componentDidMount() {
@@ -48,12 +49,30 @@ class Main extends Component {
     })
   }
 
+  toggleNavBar = () => {
+    this.setState({
+      showNavBar: !this.state.showNavBar
+    })
+  }
+
+  resetShowNavBar = () => {
+    this.setState({
+      showNavBar: false,
+    });
+  }
+
   render() {
-    const { isSignedIn } = this.state;
+    const { isSignedIn, showNavBar } = this.state;
     return (
       <Router>
         <div>
-          <Header isSignedIn={isSignedIn} updateAuthState={this.handleUpdateAuthState} />
+          <Header
+            isSignedIn={isSignedIn}
+            updateAuthState={this.handleUpdateAuthState}
+            showNavBar={showNavBar}
+            toggleNavBar={this.toggleNavBar}
+            resetShowNavBar={this.resetShowNavBar}
+          />
           <Route exact path="/" component={Home} />
           <Route exact path="/users" component={Users} />
           <PrivateRoute path="/users/:id" component={ShowUser} />
