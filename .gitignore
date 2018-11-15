@@ -16,8 +16,8 @@
 /tmp
 
 .byebug_history
-/public/packs
-/public/packs-test
+/public
 /node_modules
+/tags
 yarn-debug.log*
 .yarn-integrity
