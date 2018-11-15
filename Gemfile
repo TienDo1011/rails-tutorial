@@ -14,6 +14,7 @@ gem 'puma'
 gem 'pg', '0.20'
 gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
+gem "font-awesome-rails"
 
 group :development, :test do
     gem 'rspec-rails'
