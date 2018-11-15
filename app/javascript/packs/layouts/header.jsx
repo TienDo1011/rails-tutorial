@@ -41,7 +41,7 @@ class Header extends Component {
 
   componentDidUpdate(prevProps) {
     const { location, resetShowNavBar } = this.props;
-    if (location.pathname !== prevProps.location.pathname) {
+    if (location.key !== prevProps.location.key) {
       resetShowNavBar();
     }
   }
