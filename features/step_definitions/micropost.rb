@@ -31,3 +31,11 @@ When(/I click on delete/) do
     click_link "Delete"
   end
 end
+
+And /I see the number of post updated/ do
+  expect(page).to have_content("1 micropost")
+end
+
+And /The post input is cleared/ do
+  expect(find("#micropost-content").value).to eq("")
+end

@@ -21,6 +21,8 @@ Feature: Micropost
     When I fill in post content
     And I click on the "Post" button
     Then I see my new post
+    And I see the number of post updated
+    And The post input is cleared
     When I refresh the page
     Then I still see my new post
 

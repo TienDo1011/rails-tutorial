@@ -14,14 +14,17 @@ class Home extends Component {
     error: ''
   }
 
+  get currentUser() {
+    return getCurrentUser();
+  }
+
   async componentDidMount() {
     const isSignedIn = checkSignIn();
-    const currentUser = getCurrentUser();
     if (isSignedIn) {
       try {
-        const microposts = await get(`/users/${currentUser.id}/microposts`);
-        const followings = await get(`/users/${currentUser.id}/followings`);
-        const followers = await get(`/users/${currentUser.id}/followers`);
+        const microposts = await get(`/users/${this.currentUser.id}/microposts`);
+        const followings = await get(`/users/${this.currentUser.id}/followings`);
+        const followers = await get(`/users/${this.currentUser.id}/followers`);
         const feedItems = await get(`/users/feed`);
         this.setState({
           microposts,
@@ -45,8 +48,18 @@ class Home extends Component {
     })
   }
 
-  addToFeed = (micropost) => {
-    this.setState(prevState => ({feedItems: [micropost, ...prevState.feedItems]}))
+  addToFeed = async (micropost) => {
+    try {
+      const microposts = await get(`/users/${this.currentUser.id}/microposts`);
+      this.setState(prevState => ({
+        feedItems: [micropost, ...prevState.feedItems],
+        microposts
+      }))
+    } catch (err) {
+      this.setState({
+        error: err.message
+      })
+    }
   }
 
   render() {

@@ -28,6 +28,9 @@ class MicropostForm extends Component {
         userName: currentUser.name,
         userEmail: currentUser.email
       });
+      this.setState({
+        micropost: "",
+      });
     })
     .catch(err => this.setState({
       error: err.message
@@ -51,7 +54,7 @@ class MicropostForm extends Component {
         <button type="submit" className="btn btn-large btn-primary">Post</button>
         </form>
       </div>
-    );  
+    );
   }
 }
 
