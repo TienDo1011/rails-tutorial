@@ -7,7 +7,7 @@ const ErrorMessages = ({ errors }) => {
     <div>
       {
         hasErrors && (
-          <div id="error_explanation">
+          <div id="errorExplanation">
             <div className="alert alert-danger">
               The form contains {pluralize("error", errors.length)}.
             </div>

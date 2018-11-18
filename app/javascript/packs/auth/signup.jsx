@@ -7,7 +7,7 @@ class View extends Component {
     name: '',
     email: '',
     password: '',
-    password_confirmation: '',
+    passwordConfirmation: '',
     error: ''
   }
 
@@ -20,9 +20,9 @@ class View extends Component {
 
   handleSignup = async (ev) => {
     ev.preventDefault();
-    const { name, email, password, password_confirmation } = this.state;
+    const { name, email, password, passwordConfirmation } = this.state;
     try {
-      const user = await post("/users/signup", { name, email, password, password_confirmation });
+      const user = await post("/users/signup", { name, email, password, passwordConfirmation });
       this.updateAuthState(user);
       this.props.history.push("/");
     } catch (err) {
@@ -37,7 +37,7 @@ class View extends Component {
   }
 
   render() {
-    const { error, name, email, password, password_confirmation } = this.state;
+    const { error, name, email, password, passwordConfirmation } = this.state;
     return (
       <div className="container">
         <h1>Sign up</h1>
@@ -59,8 +59,8 @@ class View extends Component {
                 <input type="password" className="form-control" id="password" value={password} onChange={this.handleChange} />
               </div>
               <div className="form-group">
-                <label htmlFor="password_confirmation">Confirmation</label>
-                <input type="password" className="form-control" id="password_confirmation" value={password_confirmation} onChange={this.handleChange} />
+                <label htmlFor="passwordConfirmation">Confirmation</label>
+                <input type="password" className="form-control" id="passwordConfirmation" value={passwordConfirmation} onChange={this.handleChange} />
               </div>
 
               <button className="btn btn-large btn-primary">Create my account</button>

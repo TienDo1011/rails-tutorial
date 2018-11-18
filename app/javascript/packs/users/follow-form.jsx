@@ -46,7 +46,7 @@ class View extends Component {
     return (
       <div>
         { !isCurrentUser && (
-          <div id="follow_form">
+          <div id="followForm">
           {
             isFollowing &&
               <button className="btn btn-large" onClick={this.unfollow}>Unfollow</button>

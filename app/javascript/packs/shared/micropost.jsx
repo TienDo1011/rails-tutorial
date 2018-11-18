@@ -13,7 +13,7 @@ class Micropost extends Component {
   }
   render() {
     const { micropost, user } = this.props;
-    const isOwner = user.id === micropost.user_id;
+    const isOwner = user.id === micropost.userId;
     return (
       <div>
         <li>

@@ -8,9 +8,9 @@ class View extends Component {
     name: "",
     email: "",
     password: "",
-    password_confirmation: "",
+    passwordConfirmation: "",
     errors: null,
-    update_success: false
+    updateSuccess: false
   }
 
   componentDidMount() {
@@ -23,20 +23,20 @@ class View extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault();
-    const { name, email, password, password_confirmation } = this.state;
+    const { name, email, password, passwordConfirmation } = this.state;
     const currentUser = getCurrentUser();
     const params = {
       id: currentUser.id,
       name,
       email,
       password,
-      password_confirmation
+      passwordConfirmation
     };
     put(`/users/${currentUser.id}`, params)
       .then(user => {
-        this.setState({ update_success: true })
+        this.setState({ updateSuccess: true })
         this.hideUpdateSuccess = setTimeout(() => {
-          this.setState({ update_success: false })
+          this.setState({ updateSuccess: false })
         }, 5000)
         localStorage.setItem('user', JSON.stringify(user));
       })
@@ -60,9 +60,9 @@ class View extends Component {
       name,
       email,
       password,
-      password_confirmation,
+      passwordConfirmation,
       errors,
-      update_success
+      updateSuccess
     } = this.state;
     const currentUser = getCurrentUser();
     return (
@@ -71,7 +71,7 @@ class View extends Component {
           <div className="row">
             <div className="span6 offset3">
               <form onSubmit={this.handleSubmit}>
-                { update_success && (
+                { updateSuccess && (
                   <div className="alert alert-success">
                     Profile updated
                   </div>
@@ -90,8 +90,8 @@ class View extends Component {
                   <input id="password" type="text" className="form-control" value={password} onChange={this.handleChange} />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password_confirmation">Confirm Password</label>
-                  <input id="password_confirmation" type="text" value={password_confirmation} className="form-control" onChange={this.handleChange} />
+                  <label htmlFor="passwordConfirmation">Confirm Password</label>
+                  <input id="passwordConfirmation" type="text" value={passwordConfirmation} className="form-control" onChange={this.handleChange} />
                 </div>
                 <button type="submit" className="btn btn-large btn-primary">Save changes</button>
               </form>

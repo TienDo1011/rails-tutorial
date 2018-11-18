@@ -21,7 +21,7 @@ class MicropostForm extends Component {
       content: this.state.micropost
     })
     .then(micropost => {
-      const { user_id: userId, content } = micropost;
+      const { userId, content } = micropost;
       this.props.handleCreateMicropostSuccess({
         userId,
         content,

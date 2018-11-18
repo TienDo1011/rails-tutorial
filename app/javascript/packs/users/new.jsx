@@ -7,7 +7,7 @@ class View extends Component {
     name: "",
     email: "",
     password: "",
-    password_confirmation: "",
+    passwordConfirmation: "",
     errors: null
   }
 
@@ -34,7 +34,7 @@ class View extends Component {
       name,
       email,
       password,
-      password_confirmation,
+      passwordConfirmation,
       errors
     } = this.state;
     return (
@@ -57,8 +57,8 @@ class View extends Component {
                   <input id="password" type="text" className="form-control" value={password} onChange={this.handleChange} />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password_confirmation">Confirm Password</label>
-                  <input id="password_confirmation" type="text" value={password_confirmation} className="form-control" onChange={this.handleChange} />
+                  <label htmlFor="passwordConfirmation">Confirm Password</label>
+                  <input id="passwordConfirmation" type="text" value={passwordConfirmation} className="form-control" onChange={this.handleChange} />
                 </div>
                 <button type="submit" className="btn btn-large btn-primary">Create my account</button>
               </form>
