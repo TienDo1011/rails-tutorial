@@ -26,7 +26,7 @@ class FeedItem extends Component {
         </span>
         <span className="content">{item.content}</span>
         <span className="timestamp">
-          Posted {timeAgo.ago(item.created_at)}.
+          Posted {timeAgo.ago(item.createdAt)}.
         </span>
         {
           isOwner && (

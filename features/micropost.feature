@@ -26,6 +26,11 @@ Feature: Micropost
     When I refresh the page
     Then I still see my new post
 
+  Scenario: View post information
+    Given There is a micropost created 2 days ago
+    When I visit the home page
+    Then I see the micropost in feed
+
   Scenario: Delete post
     Given I have a micropost
     When I visit the home page

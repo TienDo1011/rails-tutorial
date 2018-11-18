@@ -39,3 +39,15 @@ end
 And /The post input is cleared/ do
   expect(find("#micropost-content").value).to eq("")
 end
+
+Given /There is a micropost created (\d) days ago/ do |num|
+  @num = num.to_i
+  @post = create(:micropost, user: @user, created_at: @num.days.ago)
+end
+
+Then /I see the micropost in feed/ do
+  within(".microposts") do
+    expect(page).to have_content(@post.content)
+    expect(page).to have_content("#{@num} days ago")
+  end
+end

@@ -19,7 +19,7 @@ class Micropost extends Component {
         <li>
           <span className="content">{micropost.content}</span>
           <span className="timestamp">
-            Posted {timeAgo.ago(micropost.created_at)}.
+            Posted {timeAgo.ago(micropost.createdAt)}.
           </span>
           {
             isOwner && <a href="javascript:void(0);" onClick={this.handleDelete}>Delete</a>
