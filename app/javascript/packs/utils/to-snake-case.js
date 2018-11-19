@@ -1,4 +1,4 @@
-function toSnakeCase(obj) {
+function toSnakeCase(obj = {}) {
   const snakedCaseObj = {};
   Object.keys(obj).forEach(key => {
     const value = obj[key];
