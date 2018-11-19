@@ -9,13 +9,17 @@ class User < ActiveRecord::Base
   before_create :create_digest_token
 
   validates :name, presence: true, length: { maximum: 50 }
+  VALID_USER_NAME = /\w+/i
+  validates :user_name, presence: true, format: { with: VALID_USER_NAME },
+    uniqueness: { case_sensitive: false }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  USERS_PER_PAGE = 10
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
     uniqueness: { case_sensitive: false }
 
   has_secure_password
   validates :password, length: { minimum: 6 }
+
+  USERS_PER_PAGE = 10
 
   def User.token
     SecureRandom.urlsafe_base64
