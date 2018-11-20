@@ -93,6 +93,7 @@ end
 
 When(/I fill in valid sign up information/) do
   fill_in "Name", with: "Example User"
+  fill_in "User name", with: "example_user"
   fill_in "Email", with: "user@example.com"
   fill_in "Password", with: "foobar"
   fill_in "Confirmation", with: "foobar"

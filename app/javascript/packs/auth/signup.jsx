@@ -5,6 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 class View extends Component {
   state = {
     name: '',
+    userName: '',
     email: '',
     password: '',
     passwordConfirmation: '',
@@ -20,9 +21,9 @@ class View extends Component {
 
   handleSignup = async (ev) => {
     ev.preventDefault();
-    const { name, email, password, passwordConfirmation } = this.state;
+    const { name, userName, email, password, passwordConfirmation } = this.state;
     try {
-      const user = await post("/users/signup", { name, email, password, passwordConfirmation });
+      const user = await post("/users/signup", { name, userName, email, password, passwordConfirmation });
       this.updateAuthState(user);
       this.props.history.push("/");
     } catch (err) {
@@ -37,7 +38,7 @@ class View extends Component {
   }
 
   render() {
-    const { error, name, email, password, passwordConfirmation } = this.state;
+    const { error, name, userName, email, password, passwordConfirmation } = this.state;
     return (
       <div className="container">
         <h1>Sign up</h1>
@@ -49,6 +50,10 @@ class View extends Component {
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" className="form-control" id="name" value={name} onChange={this.handleChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="userName">User name</label>
+                <input type="text" className="form-control" id="userName" value={userName} onChange={this.handleChange} />
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
