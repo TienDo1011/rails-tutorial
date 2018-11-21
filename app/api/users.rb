@@ -99,8 +99,12 @@ class Users < Grape::API
     post "signup" do
       user = User.create(params)
       err = user.errors.messages
-      if err.count > 0
-        error!({ messages: err }, 422)
+			messages = []
+			err.keys.map do |key|
+				messages.push("#{key.to_s} #{err[key][0]}")
+			end
+      if messages.count > 0
+        error!(messages.join(', '), 422)
       else
         token = User.token
         digest_token = User.digest(token)

@@ -9,7 +9,7 @@ class View extends Component {
     email: '',
     password: '',
     passwordConfirmation: '',
-    error: ''
+    errorMessage: ''
   }
 
   updateAuthState = (user) => {
@@ -27,7 +27,7 @@ class View extends Component {
       this.updateAuthState(user);
       this.props.history.push("/");
     } catch (err) {
-      this.setState({ error: err.message })
+      this.setState({ errorMessage: err.message })
     }
   }
 
@@ -38,14 +38,14 @@ class View extends Component {
   }
 
   render() {
-    const { error, name, userName, email, password, passwordConfirmation } = this.state;
+    const { errorMessage, name, userName, email, password, passwordConfirmation } = this.state;
     return (
       <div className="container">
         <h1>Sign up</h1>
 
         <div className="row">
           <div className="span6 offset3">
-            { error && <div className="alert alert-danger">{error}</div> }
+						{ errorMessage && <div class="alert alert-danger">{errorMessage}</div>}
             <form onSubmit={this.handleSignup}>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
