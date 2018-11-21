@@ -74,6 +74,19 @@ Feature: User
     And I click on "Account" link
     Then I see "Sign out" link
 
+  Scenario: Signup with duplicate user name
+    Given There is an user with user name "example"
+    When I visit signup page
+    Then I see "Sign up"
+    When I fill in valid sign up information
+    And I fill in user name with "example"
+    And I click on the "Create my account" button
+    Then I see error "user_name has already been taken"
+    When I fill in user name with "example_1"
+    And I fill in email with "example_1@admin.com"
+    And I click on the "Create my account" button
+    Then I am on the home page
+
   Scenario: Edit profile
     Given I have an account
     And I sign in

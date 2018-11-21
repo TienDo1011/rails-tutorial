@@ -10,7 +10,7 @@ And /I do not see error/ do
   expect(page).to have_no_selector('div.alert.alert-danger')
 end
 
-And /I see error/ do
+And /^I see error$/ do
   expect(page).to have_selector('div.alert.alert-danger')
 end
 

@@ -134,3 +134,19 @@ end
 And(/I see the link to my account/) do
   expect(page).to have_link(@user.name, href: "/users/#{@user.id}")
 end
+
+Given /There is an user with user name "(\w+)"/ do |user_name|
+  @user = create(:user, user_name: user_name)
+end
+
+And /I fill in user name with "(\w+)"/ do |user_name|
+  fill_in "User name", with: user_name
+end
+
+And /I fill in email with "([\w@\.]+)"/ do |email|
+  fill_in "Email", with: email
+end
+
+Then /^I see error "([\w\s]+)"$/ do |error_text|
+  expect(page).to have_content(error_text)
+end
