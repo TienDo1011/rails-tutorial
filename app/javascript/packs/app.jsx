@@ -16,10 +16,10 @@ import { checkSignIn } from './utils/auth';
 
 import { Users, ShowUser, EditUser, ShowFollowings, ShowFollowers } from './users';
 
-const PrivateRoute = ({ component: Component, path }) => {
+const PrivateRoute = ({ component: Component, path, exact }) => {
   const isSignedIn = checkSignIn();
   return (
-    <Route path={path} render={ props =>
+    <Route exact={exact} path={path} render={ props =>
       isSignedIn ?
         <Component match={props.match} /> :
         <Redirect to={{
