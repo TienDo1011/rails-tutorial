@@ -15,10 +15,28 @@ And(/I see user's follower\/following counts/) do
 end
 
 And(/^There is another user following me$/) do
-  other_user = create(:user)
-  other_user.follow!(@user)
+  @another_user = create(:user)
+  @another_user.follow!(@user)
 end
 
-When /I visit the home page/ do
+When /(I|He) visit the home page/ do |_|
   visit "/"
+end
+
+And /I make a reply to another user/ do
+  @reply = "@#{@another_user.user_name} Lorem ipsum"
+  fill_in 'micropost-content', with: @reply
+  click_button "Post"
+end
+
+Then /(I|He) see that reply in (my|his) feed/ do |_, _|
+  expect(page).to have_content(@reply)
+end
+
+Given /Another user sign in/ do
+  page.execute_script("localStorage.clear()")
+  visit "/signin"
+  fill_in "Email", with: @another_user.email
+  fill_in "Password", with: @another_user.password
+  click_button "Sign in"
 end
