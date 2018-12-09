@@ -150,3 +150,24 @@ end
 Then /^I see error "([\w\s]+)"$/ do |error_text|
   expect(page).to have_content(error_text)
 end
+
+Given /^I have an account with notify new follower via email switch (on|off)$/ do |state|
+  @user = create(:user)
+  if state == "on"
+    @user.user_configuration.update(should_notify: true)
+  else
+    @user.user_configuration.update(should_notify: false)
+  end
+end
+
+When /^He visits my page$/ do
+  visit "/users/#{@user.id}"
+end
+
+Then /^I receive an email telling me that new user has followed me$/ do
+  Sidekiq::Extensions::DelayedMailer.drain
+  email = ActionMailer::Base.deliveries.first
+  expect(email.to).to have_content(@user.email)
+  expect(email.subject).to have_content("#{@user.name} has followed you")
+  expect(email.body).to have_content("#{@user.name} has just followed you")
+end
