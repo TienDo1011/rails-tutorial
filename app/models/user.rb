@@ -4,9 +4,11 @@ class User < ActiveRecord::Base
   has_many :followed_users, through: :relationships, source: :followed
   has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  has_one :user_configuration, dependent: :destroy
 
   before_save { self.email = email.downcase }
   before_create :create_digest_token
+  after_create { UserConfiguration.create(user: self) }
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_USER_NAME = /\w+/i
@@ -38,7 +40,12 @@ class User < ActiveRecord::Base
   end
 
   def follow!(user_or_id)
-    relationships.create!(followed_id: extract_id(user_or_id))
+    id = extract_id(user_or_id)
+    relationships.create!(followed_id: id)
+    user = User.find(id)
+    if user.user_configuration.should_notify
+      UserMailer.notify_new_follower(user, self).deliver_later
+    end
   end
 
   def unfollow!(user_or_id)
