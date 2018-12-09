@@ -1,12 +1,13 @@
 import type from "type-detect";
 
 function toCamelCase(obj) {
+  obj = obj || {};
   if (type(obj) === "Array") {
     return obj.map(item => toCamelCase(item));
   }
   const camelCaseObj = {};
   const keys = Object.keys(obj);
-  
+
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const camelCaseKey = key.replace(/[-_]([a-z])/g, m => m[1].toUpperCase());
