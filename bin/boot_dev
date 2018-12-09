@@ -21,7 +21,7 @@ fi
 bundle install
 yarn install
 trap "kill $WDSPID; exit" SIGINT
-bin/webpack-dev-server&
+bin/webpack-dev-server --port 8081 &
 WDSPID=$!
 if [ $(ruby bin/db-exists.rb) == "true" ]
 then
@@ -32,4 +32,7 @@ else
   bin/rake db:create
   bin/rake db:migrate
 fi
-bin/rails s
+echo "=========> start sidekiq server"
+bundle exec sidekiq -q default -q mailers &
+echo "=========> start rails server"
+bin/rails s --port 8080
