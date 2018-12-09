@@ -13,6 +13,7 @@ import { Footer, Header } from './layouts'
 import { Home, Help, About, Contact } from './static-pages'
 import { Signin, Signup } from "./auth";
 import { checkSignIn } from './utils/auth';
+import Settings from "./settings";
 
 import { Users, ShowUser, EditUser, ShowFollowings, ShowFollowers } from './users';
 
@@ -79,6 +80,7 @@ class Main extends Component {
           <PrivateRoute path="/profile" component={EditUser} />
           <PrivateRoute path="/users/:id/followings" component={ShowFollowings} />
           <PrivateRoute path="/users/:id/followers" component={ShowFollowers} />
+          <PrivateRoute path="/settings" component={Settings} />
           <Route path="/help" component={Help} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
