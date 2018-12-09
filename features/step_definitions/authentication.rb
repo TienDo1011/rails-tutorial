@@ -1,4 +1,4 @@
-Given /I have an account/ do
+Given /^I have an account$/ do
   @user = create(:user)
 end
 

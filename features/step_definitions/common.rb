@@ -1,4 +1,4 @@
-And /I click on the "([\w\s]+)" button/ do |text|
+And /(I|He) click on the "([\w\s]+)" button/ do |_, text|
   click_button text
 end
 
