@@ -182,6 +182,7 @@ class Users < Grape::API
     post "follow" do
       authenticate!
       current_user.follow!(params[:id])
+      current_user
     end
 
     desc "Unfollow an user"
