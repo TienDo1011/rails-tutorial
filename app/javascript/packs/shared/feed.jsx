@@ -8,7 +8,7 @@ const Feed = ({ feedItems, reloadFeedItems }) => {
       {
         hasFeed && (
           <ol className="microposts">
-            {feedItems.map(item => <FeedItem item={item} reloadFeedItems={reloadFeedItems} />)}
+            {feedItems.map(item => <FeedItem key={item.id} item={item} reloadFeedItems={reloadFeedItems} />)}
           </ol>
         )
       }

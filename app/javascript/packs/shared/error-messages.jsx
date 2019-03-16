@@ -10,12 +10,12 @@ const ErrorMessages = ({ errors }) => {
           <div id="errorExplanation">
             <div className="alert alert-danger">
               The form contains {pluralize("error", errors.length)}.
+              <ul>
+                {
+                  errors.map((msg, index) => <li key={index}>{msg}</li>)
+                }
+              </ul>
             </div>
-            <ul>
-              {
-                errors.map(msg => <li>* {msg} </li>)
-              }
-            </ul>
           </div>
         )
       }

@@ -15,7 +15,7 @@ import { Signin, Signup } from "./auth";
 import { checkSignIn } from './utils/auth';
 import Settings from "./settings";
 
-import { Users, ShowUser, EditUser, ShowFollowings, ShowFollowers } from './users';
+import { Users, ShowUser, Profile, ShowFollowings, ShowFollowers } from './users';
 
 const PrivateRoute = ({ component: Component, path, exact }) => {
   const isSignedIn = checkSignIn();
@@ -77,7 +77,7 @@ class Main extends Component {
           <Route exact path="/" component={Home} />
           <PrivateRoute exact path="/users" component={Users} />
           <PrivateRoute path="/users/:id" component={ShowUser} />
-          <PrivateRoute path="/profile" component={EditUser} />
+          <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/users/:id/followings" component={ShowFollowings} />
           <PrivateRoute path="/users/:id/followers" component={ShowFollowers} />
           <PrivateRoute path="/settings" component={Settings} />
